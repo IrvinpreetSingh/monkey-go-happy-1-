@@ -1,107 +1,46 @@
-
-var player, player_running;
-var ground;
-
-var FoodGroup, bananaImage;
-var obstaclesGroup, obstacleImage;
-
-var score=0;
-var survivalTime=0;
-
-function preload(){
- player_running=loadImage("Monkey_01.png");
-  
-  bananaImage=loadImage("Banana.png");
-  
-  obstacleImage=loadImage("stone.png");
+var ball,img,paddle;
+function preload() {
+  /* preload your images here of the ball and the paddle */
 }
-
 function setup() {
-  createCanvas(800,400);
+  createCanvas(400, 400);
+   /* create the Ball Sprite and the Paddle Sprite */
+  /* assign the images to the sprites */
   
-  player = createSprite(100,340,20,50);
-  player.addImage(player_running);
-  player.scale=0.1;
+  /* give the ball an initial velocity of 9 in the X direction */
   
-  ground = createSprite(400,350,800,10);
-  ground.velocityX=-4;
-  ground.x=ground.width/2;
- 
-  FoodGroup = new Group();
-  obstaclesGroup = new Group();
-  
-  score = 0;
+
 }
 
 function draw() {
+  background(205,153,0);
+  /* create Edge Sprites here */
   
-  background(255);
+  /* Allow the ball sprite to bounceOff the left, top and bottom edges only, leaving the right edge of the canvas to be open. */
   
-    
-  if(ground.x<0) {
-    ground.x=ground.width/2;
-  }
-  
-  
-   
-    if(keyDown("space") ) {
-      player.velocityY = -12;
-    }
-    player.velocityY = player.velocityY + 0.8;
-  
-    player.collide(ground);
-    spawnFood();
-    spawnObstacles();
+
+  /* Allow the ball to bounceoff from the paddle */
+  /* Also assign a collision callback function, so that the ball can have a random y velocity, making the game interesting */
  
+  /* Prevent the paddle from going out of the edges */ 
+  
+  
+  if(keyDown(UP_ARROW))
+  {
+     /* what should happen when you press the UP Arrow Key */
+  }
+  
+  if(keyDown(DOWN_ARROW))
+  {
+    /* what should happen when you press the UP Arrow Key */
+  }
   drawSprites();
-  stroke("white");
-  textSize(20);
-  fill("white");
-  text("Score: "+ score, 500,50);
   
-  stroke("black");
-  textSize(20);
-  fill("black");
-  survivalTime=Math.floor(frameCount/frameRate()) 
-  text("Survival Time: "+ survivalTime, 500,50);
 }
 
-function spawnFood() {
-  //write code here to spawn the Food
-  if (frameCount % 80 === 0) {
-    var banana = createSprite(600,250,40,10);
-    banana.y = random(120,200);    
-    banana.velocityX = -5;
-    
-     //assign lifetime to the variable
-    banana.lifetime = 300;
-    player.depth = banana.depth + 1;
-    
-    //add image of banana
-    banana.addImage(bananaImage);
-    banana.scale=0.05;
-    
-    //add each banana to the group
-    FoodGroup.add(banana);
-  }
+function randomVelocity()
+{
+  /* this function gets called when the ball bounces off the paddle */
+  /* assign the ball a random vertical velocity, so it bounces off in random direction */
 }
 
-function spawnObstacles() {
-  if(frameCount % 300 === 0) {
-    var obstacle = createSprite(800,340,10,40);
-    obstacle.velocityX = -6;
-    
-    //add image to the obstacle 
-    obstacle.addImage(obstacleImage);
-    obstacle.scale=0.2;
-    
-    //lifetime to the obstacle     
-    obstacle.lifetime = 300;
-    
-    //add each obstacle to the group
-    obstaclesGroup.add(obstacle);
-  }
-}
-
-
-  
